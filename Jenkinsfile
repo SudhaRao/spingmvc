@@ -5,19 +5,23 @@ pipeline {
         stage ('Build'){
             steps {
                 git url: 'https://github.com/SudhaRao/spingmvc.git'
-                withMaven(maven: 'maven_4_0_0'){
+                withMaven(maven: 'maven_3_5_0'){
                     sh 'mvn clean package'
                 }
             }
         }
         stage ('Test'){
             steps {
-                echo 'Testing..'
+                withMaven(maven : 'maven_3_5_0') {
+                    sh 'mvn test'
+                }
             }
         }
         stage ('Deploy'){
             steps {
-                echo 'Deploying..'
+                withMaven(maven : 'maven_3_5_0') {
+                    sh 'mvn deploy'
+                }
             }
         }
     }
