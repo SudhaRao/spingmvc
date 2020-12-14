@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage ('Build'){
             steps {
-                withMaven(maven: 'maven_4.0.0') {
+                git url: 'https://github.com/SudhaRao/spingmvc.git'
+                withMaven{
                     sh 'mvn clean package'
                 }
             }
