@@ -1,9 +1,7 @@
 pipeline {
 
     agent any
-    tools {
-            maven 'maven_3_9_3'
-        }
+
     stages {
         stage ('Build'){
             steps {
@@ -15,14 +13,14 @@ pipeline {
         }
         stage ('Test'){
             steps {
-                withMaven(maven: 'maven_3_9_3' {
+                withMaven(maven: 'maven_3_9_3') {
                     sh 'mvn test'
                 }
             }
         }
-        stage ('Deploy')(maven: 'maven_3_9_3'{
+        stage ('Deploy'){
             steps {
-                withMaven {
+                withMaven(maven: 'maven_3_9_3') {
                     sh 'mvn deploy'
                 }
             }
