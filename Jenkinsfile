@@ -1,24 +1,26 @@
 pipeline {
 
     agent any
-
+    tools {
+            maven 'maven_3_9_3'
+        }
     stages {
         stage ('Build'){
             steps {
                 git url: 'https://github.com/SudhaRao/spingmvc.git'
-                withMaven{
+                withMaven(maven: 'maven_3_9_3') {
                     sh 'mvn clean package'
                 }
             }
         }
         stage ('Test'){
             steps {
-                withMaven {
+                withMaven(maven: 'maven_3_9_3' {
                     sh 'mvn test'
                 }
             }
         }
-        stage ('Deploy'){
+        stage ('Deploy')(maven: 'maven_3_9_3'{
             steps {
                 withMaven {
                     sh 'mvn deploy'
