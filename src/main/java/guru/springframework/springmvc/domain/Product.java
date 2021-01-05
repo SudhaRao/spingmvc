@@ -2,12 +2,12 @@ package guru.springframework.springmvc.domain;
 
 import java.math.BigDecimal;
 
-public class Product {
+public class Product implements DomainObject{
 
     private Integer id;
     private String description;
     private BigDecimal price;
-    private String imageURL;
+    private String imageUrl;
 
     public Integer getId() {
         return id;
@@ -33,11 +33,12 @@ public class Product {
         this.price = price;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
+
 }

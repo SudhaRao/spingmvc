@@ -1,30 +1,42 @@
 package guru.springframework.springmvc.services;
 
 import guru.springframework.springmvc.domain.Customer;
-import guru.springframework.springmvc.domain.Product;
+import guru.springframework.springmvc.domain.DomainObject;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl extends AbstractMapService implements CustomerService {
 
-    private Map<Integer, Customer> customers;
-
-    public CustomerServiceImpl() {
-        loadCustomers();
+    @Override
+    public List<DomainObject> listAll() {
+        return super.listAll();
     }
+
+    @Override
+    public Customer getById(Integer id) {
+        return (Customer) super.getById(id);
+    }
+
+    @Override
+    public Customer saveOrUpdate(Customer domainObject) {
+        return (Customer) super.saveOrUpdate(domainObject);
+    }
+
 
 
     @Override
-    public List<Customer> listAllCustomers() {
-
-        return new ArrayList<>(customers.values());
+    public void delete(Integer id) {
+        super.delete(id);
     }
 
-    private void loadCustomers(){
 
-        customers = new HashMap<>();
+
+    protected void loadDomainObjects(){
+
+        domainMap = new HashMap<>();
 
         Customer customer1 = new Customer();
         customer1.setId(1);
@@ -38,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService{
         customer1.setZip_code("580006");
         customer1.setEmail("aadhya@gmail.com");
 
-        customers.put(1, customer1);
+        domainMap.put(1, customer1);
 
         Customer customer2 = new Customer();
         customer2.setId(2);
@@ -52,7 +64,7 @@ public class CustomerServiceImpl implements CustomerService{
         customer2.setZip_code("55379");
         customer2.setEmail("ashwini@gmail.com");
 
-        customers.put(2, customer2);
+        domainMap.put(2, customer2);
 
         Customer customer3 = new Customer();
         customer3.setId(3);
@@ -66,7 +78,7 @@ public class CustomerServiceImpl implements CustomerService{
         customer3.setZip_code("55379");
         customer3.setEmail("aditya@gmail.com");
 
-        customers.put(3, customer3);
+        domainMap.put(3, customer3);
 
         Customer customer4 = new Customer();
         customer4.setId(4);
@@ -80,7 +92,7 @@ public class CustomerServiceImpl implements CustomerService{
         customer4.setZip_code("123456");
         customer4.setEmail("rishi@gmail.com");
 
-        customers.put(4, customer4);
+        domainMap.put(4, customer4);
 
         Customer customer5 = new Customer();
         customer5.setId(5);
@@ -94,36 +106,7 @@ public class CustomerServiceImpl implements CustomerService{
         customer5.setZip_code("554433");
         customer5.setEmail("yash@gmail.com");
 
-        customers.put(5, customer5);
+        domainMap.put(5, customer5);
     }
 
-    @Override
-    public Customer getCustomerById(Integer id) {
-        return customers.get(id);
-    }
-
-    @Override
-    public Customer saveOrUpdateCustomer(Customer customer) {
-
-        if(customer != null){
-            if(customer.getId() == null){
-                customer.setId(getNextKey());
-            }
-            customers.put(customer.getId(), customer);
-
-            return customer;
-        }else {
-            throw new RuntimeException("Customer cant be null");
-        }
-
-    }
-
-    @Override
-    public void deleteCustomer(Integer id) {
-        customers.remove(id);
-    }
-
-    private Integer getNextKey(){
-        return Collections.max(customers.keySet()) +1;
-    }
 }
